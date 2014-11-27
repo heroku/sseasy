@@ -2,7 +2,7 @@
 
 module.exports = function() {
   return function sse(req, res, next){
-    if (req.headers['Accept'] !== 'text/event-stream') { return next(); }
+    if (req.headers.accept !== 'text/event-stream') { return next(); }
 
     res.writeHead(200, {
       'Connection': 'keep-alive',

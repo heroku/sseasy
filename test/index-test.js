@@ -27,7 +27,7 @@ describe('sseasy', function() {
 
   context('given a non event stream header', function() {
     beforeEach(function() {
-      req.headers['Accept'] = 'application/json';
+      req.headers.accept = 'application/json';
     });
 
     it('calls next', function() {
@@ -43,7 +43,7 @@ describe('sseasy', function() {
 
   context('given an event stream header', function() {
     beforeEach(function() {
-      req.headers['Accept'] = 'text/event-stream';
+      req.headers.accept = 'text/event-stream';
     });
 
     it('sends a 200 and event stream response headers', function() {
