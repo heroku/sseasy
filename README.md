@@ -1,5 +1,9 @@
 # SSEasy
 
+[![Build Status](https://travis-ci.org/heroku/sseasy.svg?branch=master)](https://travis-ci.org/heroku/sseasy)
+
+[![NPM](https://nodei.co/npm/sseasy.png)](https://nodei.co/npm/sseasy/)
+
 SSE middleware for [Connect](https://github.com/senchalabs/connect) & [Express](http://expressjs.com/).
 
 All messages in a single connection are sent with incrementing IDs. If the client passes an ID in a `last-event-id` header, the middleware ignores messages until that ID is reached.
