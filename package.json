@@ -1,0 +1,27 @@
+{
+  "name": "sseasy",
+  "version": "1.0.0",
+  "description": "Server sent events middleware for connect",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/jshint && ./node_modules/.bin/mocha"
+  },
+  "keywords": [
+    "SSE",
+    "EventSource",
+    "connect",
+    "middleware",
+    "server",
+    "sent",
+    "events"
+  ],
+  "author": "Andy Appleton",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "jshint": "^2.5.10",
+    "mocha": "^2.0.1",
+    "sinon": "^1.12.1",
+    "sinon-chai": "^2.6.0"
+  }
+}
