@@ -4,7 +4,7 @@
 
 [![NPM](https://nodei.co/npm/sseasy.png)](https://nodei.co/npm/sseasy/)
 
-SSE middleware for [Connect](https://github.com/senchalabs/connect) & [Express](http://expressjs.com/).
+Server sent events middleware for [Connect](https://github.com/senchalabs/connect) & [Express](http://expressjs.com/).
 
 All messages in a single connection are sent with incrementing IDs. If the client passes an ID in a `last-event-id` header, the middleware ignores messages until that ID is reached.
 
