@@ -10,14 +10,25 @@ All messages in a single connection are sent with incrementing IDs. If the clien
 
 ## Use
 
-On the server:
+On the server as a writeable stream:
+
+```js
+var sse = require('sseasy');
+var fs  = require('fs');
+
+app.get('/stream', sse(), function(req, res) {
+  fs.createReadStream('/some/file.txt').pipe(res.sse);
+});
+```
+
+On the server with manual events:
 ```js
 var sse = require('sseasy');
 
 app.get('/stream', sse(), function(req, res) {
-  res.sse('a message');
+  res.sse.write('a message');
   setTimeout(function() {
-    res.sse('a second message');
+    res.sse.write('a second message');
   }, 2000);
 });
 ```

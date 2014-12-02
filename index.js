@@ -1,5 +1,7 @@
 'use strict';
 
+var through2 = require('through2');
+
 module.exports = function() {
   return function sse(req, res, next){
     if (req.headers.accept !== 'text/event-stream') { return next(); }
@@ -21,14 +23,21 @@ module.exports = function() {
      * Accept a string and send each line as a new SSE message. We keep track of
      * ID to allow reconnections
      */
-    res.sse = function(string){
+    function writeSSE(string){
+      console.log(string.toString());
       string.toString().split('\n').forEach(function(string) {
         if (firstId > nextId) { return nextId++; }
         res.write('id: ' + nextId + '\n');
         res.write('data: ' + string + '\n\n');
         nextId++;
       });
-    };
+    }
+
+    res.sse = through2(function(data, enc, cb) {
+      if (data) { writeSSE(data); }
+      this.push(data);
+      if (typeof cb === 'function') { cb(); }
+    });
 
     next();
   };

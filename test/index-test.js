@@ -7,6 +7,7 @@ var expect = chai.expect;
 chai.use(sinonChai);
 
 var sseasy = require('../index');
+var stream = require('stream');
 
 describe('sseasy', function() {
   var req, res, next;
@@ -55,29 +56,31 @@ describe('sseasy', function() {
       });
     });
 
-    it('adds an sse method to the response object', function() {
+    it('adds an sse stream to the response object', function() {
       callMiddleware();
-      expect(res.sse).to.be.a('function');
+      expect(res.sse.pipe).to.be.a('function');
+      expect(res.sse.write).to.be.a('function');
+      expect(res.sse.end).to.be.a('function');
     });
 
-    describe('res.sse', function() {
+    describe('res.sse.write', function() {
       it('sends an id to the client first', function() {
         callMiddleware();
-        res.sse('a message');
+        res.sse.write('a message');
         expect(res.write.firstCall).to.have.been.calledWith('id: 0\n');
       });
 
       it('sends the string to the client second', function() {
         callMiddleware();
-        res.sse('a message');
+        res.sse.write('a message');
         expect(res.write.secondCall).to.have.been.calledWith('data: a message\n\n');
       });
 
       context('when called multiple times', function() {
         it('sends incrementing IDs to the client', function() {
           callMiddleware();
-          res.sse('message 1');
-          res.sse('message 2');
+          res.sse.write('message 1');
+          res.sse.write('message 2');
 
           expect(res.write).to.have.callCount(4);
           expect(res.write.getCall(0)).to.have.been.calledWith('id: 0\n');
@@ -90,7 +93,7 @@ describe('sseasy', function() {
       context('when given a multiline string', function() {
         it('sends each line as a new message', function() {
           callMiddleware();
-          res.sse('message 1\nmessage 2');
+          res.sse.write('message 1\nmessage 2');
 
           expect(res.write).to.have.callCount(4);
           expect(res.write.getCall(0)).to.have.been.calledWith('id: 0\n');
@@ -107,9 +110,9 @@ describe('sseasy', function() {
         });
 
         it('only sends messages after that id', function() {
-          res.sse('message 1');
-          res.sse('message 2');
-          res.sse('message 3');
+          res.sse.write('message 1');
+          res.sse.write('message 2');
+          res.sse.write('message 3');
 
           expect(res.write).to.have.callCount(2);
           expect(res.write.getCall(0)).to.have.been.calledWith('id: 2\n');
