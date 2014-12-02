@@ -7,7 +7,6 @@ var expect = chai.expect;
 chai.use(sinonChai);
 
 var sseasy = require('../index');
-var stream = require('stream');
 
 describe('sseasy', function() {
   var req, res, next;
