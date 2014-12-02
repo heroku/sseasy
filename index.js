@@ -24,7 +24,6 @@ module.exports = function() {
      * ID to allow reconnections
      */
     function writeSSE(string){
-      console.log(string.toString());
       string.toString().split('\n').forEach(function(string) {
         if (firstId > nextId) { return nextId++; }
         res.write('id: ' + nextId + '\n');
