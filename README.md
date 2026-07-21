@@ -8,6 +8,12 @@ Server sent events middleware for [Connect](https://github.com/senchalabs/connec
 
 All messages in a single connection are sent with incrementing IDs. If the client passes an ID in a `last-event-id` header, the middleware ignores messages until that ID is reached.
 
+## Install
+
+```
+npm install --save sseasy
+```
+
 ## Use
 
 On the server as a writeable stream:
